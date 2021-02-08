@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+    <title>Hello, world!</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,500" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap" rel="stylesheet"
+        type="text/css">
+    <style type="text/css">
+        @import url(https://fonts.googleapis.com/css?family=Roboto:300,500);
+        @import url(https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap);
+    </style>
+    <style type="text/css">
+        .text-main{
+            color: #F78F1E !important;
+        }
+        .text-second{
+            color: #000000 !important;
+        }
+    
+        /* p {
+            margin: 0px !important;
+        } */
+    
+        .op7 {
+            opacity: 0.7;
+        }
+    
+        .golden-color {
+            color: #AA9070;
+        }
+    
+        .grey-color {
+            color: #616161 !important;
+        }
+    
+        .red-color {
+            color: red !important;
+        }
+    
+        .border-number {
+            border: 1px solid #000000;
+            padding: 5px;
+        }
+    
+        .text-small {
+            font-size: 14px !important;
+            /* font-size: 16px !important; */
+        }
+    
+        .tachado {
+            text-decoration: line-through;
+        }
+        .container{
+            width: 100% !important;
+        }
+        div{
+            font-family: Roboto Condensed, Roboto, Helvetica;
+            font-weight:300;
+            line-height:1;
+            text-align:center;
+            color:#000000;
+            font-size: 20px!important;
+            /*  font-size: 22px;  */
+        }
+        .big{
+            /* font-size: 36px !important;  */
+            font-size: 34px !important;
+        }
+        .golden{
+            color: #AA9070;
+        }
+    
+        * {     page-break-inside: avoid;     page-break-after: avoid;     page-break-before: avoid;   }
+    </style>
+    
+    </head>
+  <body>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <img src="{{url_banner}}" class="op7" style="height: auto; width: 100%;" alt="Responsive image">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <br>
+                <div class="big text-center">{{tituloUno}}</div>
+                <br>
+                <div class="text-main big text-center">{{tituloDos}} {{propiedad}}.</div>
+                <br>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="text-center">
+                    <b>
+                        <p class="text-second">{{tituloClienteUno}} <span class="text-main">{{tituloClienteDos}}</span></p>
+                    </b>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="text-left p-2">
+                            <p class="grey-color">{{tx_nombre}}</p>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="text-left p-2">
+                            <p>{{nombre}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="text-left p-2">
+                            <p class="grey-color">{{tx_numero}} </p>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="text-left p-2">
+                            <p>{{telefono}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="text-left p-2">
+                            <p class="grey-color">{{tx_correo}} </p>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="text-left p-2">
+                            <p style=" word-break: break-all;">{{correo}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+    
+                        <div class="text-left p-2">
+                            <p class="grey-color">{{tx_requerimiento}} </p>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="text-left p-2">
+                            <p>{{requerimiento_especial}}</p>
+                        </div>
+                    </div>
+                </div>
+                {{on_hold}}
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="text-center p-2">
+                            <p>{{tx_avisoUno}} </p>
+                        </div>
+                        <div class="text-center p-2">
+                            <p>{{tx_avisoDos}}</p>
+                        </div>
+                    </div>
+    
+                </div>
+            </div>
+    
+            <div class="col-xs-6">
+                <div class="text-center">
+                    <b>
+                        <p class="text-second" style="padding-bottom:5px">{{tituloConfirmacionUno}}<span class="text-main">{{tituloConfirmacionDos}}</span></p>
+                    </b>
+                    <p class="border-number">{{codigo_confirmacion}}</p>
+                </div>
+                <img class="paddingFull my-1 img-fluid"
+                    src="{{url_reservation}}" alt=""></img>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="text-center p-2">
+                    <p>{{tx_avisoTres}}
+                    </p>
+                </div>
+                <div class="text-center p-2">
+                    <p>{{tx_avisoCuatro}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="text-center p-2">
+                    <br><p style="border-top:solid 1px #E0E0E0;font-size:1px;margin:0px auto;width:100%;"> </p><br>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Booking Information. -->
+        
+        <div class="row">
+            <div class="col-xs-12" style="padding: 10px 0px 10px 0px ;">
+                <div class="text-center">
+                    <b>
+                        <p class="text-second">{{tx_bookingUno}} <span class="text-main">{{tx_bookingDos}}</span></p>
+                    </b>
+                </div>
+            </div>
+            <div class="col-xs-2" style="border-right: 1px solid #eeeeee; padding: 10px 0px 10px 0px ;">
+                <div class="text-center">
+                    <p class="grey-color">{{bi_llegadaFecha}}</p>
+                    <p>{{check_in_fecha}}</p>
+                </div>
+            </div>
+            <div class="col-xs-2" style="border-right: 1px solid #eeeeee; padding: 10px 0px 10px 0px ;">
+                <div class="text-center">
+                    <p class="grey-color">{{bi_salidaFecha}}</p>
+                    <p>{{check_out_fecha}}</p>
+                </div>
+            </div>
+            <div class="col-xs-2" style="border-right: 1px solid #eeeeee; padding: 10px 0px 10px 0px ;">
+                <div class="text-center">
+                    <p class="grey-color">{{bi_llegadaHora}}</p>
+                    <p>{{check_in_tiempo}}</p>
+                </div>
+            </div>
+            <div class="col-xs-2" style="border-right: 1px solid #eeeeee; padding: 10px 0px 10px 0px ;">
+                <div class="text-center">
+                    <p class="grey-color">{{bi_salidaHora}}</p>
+                    <p>{{check_out_tiempo}}</p>
+                </div>
+            </div>
+            <div class="col-xs-2" style="border-right: 1px solid #eeeeee; padding: 10px 0px 10px 0px ;">
+                <div class="text-center">
+                    <p class="grey-color">{{bi_noches}}</p>
+                    <p>{{noches}}</p>
+                </div>
+            </div>
+            <div class="col-xs-2" style="padding: 10px 0px 10px 0px ;">
+                <div class="text-center">
+                    <p class="grey-color">{{bi_cuartos}}</p>
+                    <p>{{numeros_cuartos}}</p>
+                </div>
+            </div>
+            <div class="col-xs-12">
+                <div class="row">
+                    <div class="col-xs-12" style="padding: 10px 0px 10px 0px ;">
+                        <div class="text-center" style="padding: 5px">
+                            <p>{{bi_avisoDos}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br>
+        <!-- Rooms Information. -->
+        {{html_rooms}}
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="text-center p-5">
+                    <br><p style="border-top:solid 1px #E0E0E0;font-size:1px;margin:0px auto;width:100%;"> </p><br>
+                </div>
+            </div>
+        </div>
+        <!-- Beneficios Information. -->
+
+        <div class="row align-items-center">
+            <br>
+            <div class="col-xs-6">
+                <div class="text-center">
+                    <b>
+                        <p class="text-second">{{serUno}} <span class="text-main">{{serDos}}</span></p>
+                    </b>
+                </div>
+                <img class="paddingFull my-1 img-fluid"
+                    src=" https://s3.amazonaws.com/webfiles_palace/clever-qa/booking_engine/amenities.png" alt=""></img>
+                <div class="text-justify">
+                    <p>{{servicio}}</p>
+                </div>
+                <div class="text-justify">
+                  <p>{{servicio2}} </p><p>{{servicio3url}}</p>
+              </div>
+        
+            </div>
+            <div class="col-xs-6">
+                <img class="paddingFull my-1 img-fluid"
+                    src="https://s3.amazonaws.com/webfiles_palace/clever-qa/booking_engine/happy.png" alt=""></img>
+            </div>
+            <br>
+        </div>
+        <div class="row">
+            <br>
+            <div class="col-xs-12">
+                <div class="text-center p-2">
+                    <br><p style="border-top:solid 1px #E0E0E0;font-size:1px;margin:0px auto;width:100%;"> </p><br>
+                </div>
+            </div>
+            <br>
+        </div>
+
+        <!-- Services Information. -->
+        {{html_services}}
+        
+
+        <!-- Policy Information. -->
+        <div class="row">
+            <div class="col-xs-12">
+                <b>
+                    <p class="text-left text-second">{{poliUno}} <span class="text-main">{{poliDos}}</span></p>
+                </b>
+            </div>
+            <div class="col-xs-12">
+                <div class="text-justify p-2 text-small">
+                    {{politica_cancelacion}}
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col">
+                <div style="height: 50px;"></div>
+                <img class="paddingFull my-1 img-fluid"
+                    src={{img_purely}} alt=""></img>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="row">
+                    <div class="col-xs-2"></div>
+                    <div class="col-xs-8">
+                        <div style="height: 50px;"></div>
+                        <img class="paddingFull my-1 img-fluid" src={{img_qr}} alt=""></img>
+                    </div>
+                    <div class="col-xs-2"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Property. -->
+        <div class="row" style="background-color: #c9cacb; margin-top: 50px; padding: 25px;">
+          <div class="col-xs-1" style="margin-top: 12px;">
+            <img class="paddingFull my-1 img-fluid"
+              src={{img_location}} alt=""></img>
+          </div>
+          <div class="col-xs-11" style="margin-top: 20px;">
+              <p class="text-left ">{{address}}</p>
+          </div>
+
+          <div class="col-xs-1" style="margin-top: 12px;">
+            <img class="paddingFull my-1 img-fluid"
+              src={{img_web}} alt=""></img>
+          </div>
+          <div class="col-xs-11" style="margin-top: 20px;">
+              <p class="text-left ">{{web_address}}</p>
+          </div>
+
+          <div class="col-xs-1" style="margin-top: 12px;">
+            <img class="paddingFull my-1 img-fluid"
+              src={{img_phone}} alt=""></img>
+          </div>
+          <div class="col-xs-11" style="margin-top: 20px;">
+              <p class="text-left ">{{resort_phone}}</p>
+          </div>
+
+          <div class="col-xs-1" style="margin-top: 12px;">
+            <img class="paddingFull my-1 img-fluid"
+              src={{img_email}} alt=""></img>
+          </div>
+          <div class="col-xs-11" style="margin-top: 20px;">
+              <b> <p class="text-left ">Reservation:</p> </b>
+              <p class="text-left ">{{reservation_email}}</p>
+          </div>
+
+          <div class="col-xs-1" style="margin-top: 12px;">
+            <img class="paddingFull my-1 img-fluid"
+              src={{img_email}} alt=""></img>
+          </div>
+          <div class="col-xs-11" style="margin-top: 20px;">
+            <b> <p class="text-left ">Resorts E-mail:</p> </b>
+            <p class="text-left ">{{resort_email}}</p>
+          </div>
+      </div>
+      
+      <div class="row">
+        <div class="col">
+            <div style="height: 50px;"></div>
+            <img class="paddingFull my-1 img-fluid"
+                src={{img_footer}} alt=""></img>
+        </div>
+    </div>
+
+    </div>
+  </body>
+</html>

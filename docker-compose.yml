@@ -1,0 +1,13 @@
+web:
+  build: .
+  ports:
+    - "5002:5000"
+  dns:
+    - 140.50.4.22
+    - 140.50.4.12
+  dns_search:
+    - palace-resorts.local
+  volumes:
+    - .:/app
+  environment:
+    - FLASK_ENV=development
