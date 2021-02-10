@@ -3,14 +3,14 @@ from flask_restful import Resource
 from marshmallow import ValidationError
 
 from config import db, base
-from models.area_unit import AreaUnitSchema as ModelSchema, AreaUnit as Model
+from models.area_unit import Pms as Model, PmsSchema as ModelSchema
 from common.util import Util
 
 
 class AreaUnit(Resource):
 
     #api-area-unit-get-by-id
-    @base.access_middleware
+    #@base.access_middleware
     def get(self, id):
         try:
             schema = ModelSchema(exclude=Util.get_default_excludes())
