@@ -11,4 +11,9 @@ api.add_resource(AreaUnitListSearch, '/api/area-unit/get',endpoint="api-area-uni
 
 api.add_resource(AreaUnit, '/api/pms/get/<int:id>',endpoint="api-area-unit-get-by-id", methods=["GET"])
 
-api.add_resource(Channel, '/api/channel/get/<int:id>', endpoint="api-channel-get-by-id", methods=["GET"])
+#urls apis tabla channel
+api.add_resource(Channel, '/api/channel/create',endpoint="api-channel-post", methods=["POST"])
+api.add_resource(Channel, '/api/channel/search/<int:id>',endpoint="api-channel-get-by-id", methods=["GET"])
+api.add_resource(Channel, '/api/channel/update/<int:id>',endpoint="api-channel-put", methods=["PUT"])
+api.add_resource(Channel, '/api/channel/delete/<int:id>',endpoint="api-channel-delete", methods=["DELETE"])
+api.add_resource(ChannelSearch, '/api/channel/get', endpoint="api-channel-get-all", methods=["GET"])

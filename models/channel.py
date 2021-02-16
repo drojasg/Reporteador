@@ -1,5 +1,6 @@
 from datetime import datetime
 from config import db, ma
+from models.channel_type import ChannelType
 from marshmallow import Schema, fields, validate
 
 
@@ -9,8 +10,8 @@ class Channel(db.Model):
     iddef_channel = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100),nullable=False)
     description = db.Column(db.String(100), nullable=False)
-    iddef_channel_type = db.Column(db.Integer)
-    idop_sistemas = db.Column(db.Integer)
+    iddef_channel_type = db.Column(db.Integer, db.ForeignKey("def_channel_type.iddef_channel_type"), nullable= False)
+    #idop_sistemas = db.Column(db.Integer,db.ForeignKey(), nullable=False)
     external_id = db.Column(db.String())
     url = db.Column(db.String(100), nullable = False)
     estado = db.Column(db.Integer)

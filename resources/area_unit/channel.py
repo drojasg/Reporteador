@@ -41,7 +41,7 @@ class Channel(Resource):
         return response
 
     #api-area-unit-put
-    @base.access_middleware
+    #@base.access_middleware
     def put(self, id):
         response = {}
         try:
@@ -136,7 +136,7 @@ class Channel(Resource):
         return response
 
     #api-area-unit-post
-    @base.access_middleware
+    #@base.access_middleware
     def post(self):
         response = {}
         try:
@@ -144,11 +144,14 @@ class Channel(Resource):
             schema = ModelSchema(exclude=Util.get_default_excludes())
             data = schema.load(json_data)
             model = Model()
-            user_data = base.get_token_data()
-            user_name = user_data['user']['username']
-
+            #user_data = base.get_token_data()
+            user_name = "admin"
+            #model.iddef_channel = data["iddef_channel"]
+            model.name = data["name"]
             model.description = data["description"]
-            model.estado = data["estado"]
+            model.iddef_channel_type = data["iddef_channel_type"]
+            model.external_id = data["external_id"]
+            model.url = data["url"]
             model.usuario_creacion = user_name
             db.session.add(model)
             db.session.commit()
@@ -180,7 +183,7 @@ class Channel(Resource):
 
 class ChannelSearch(Resource):
     #api-area-unit-get-all
-    @base.access_middleware
+    #@base.access_middleware
     def get(self):
         try:
 
