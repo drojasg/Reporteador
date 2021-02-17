@@ -23,7 +23,7 @@ api.add_resource(BookAddressListSearch, '/api/address/get',endpoint="api-area-ad
 #def_property
 api.add_resource(DefProperty, '/api/property/search/<int:id>',endpoint="api-def-property-get-by-id", methods=["GET"])
 api.add_resource(DefPropertyListSearch, '/api/property/get',endpoint="api-def-property-get-all", methods=["GET"])
-
+api.add_resource(DefProperty, '/api/property/create', endpoint="api-def-property-create", methods=["POST"])
 
 #urls apis tabla channel
 api.add_resource(Channel, '/api/channel/create',endpoint="api-channel-post", methods=["POST"])

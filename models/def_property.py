@@ -1,6 +1,8 @@
 from datetime import datetime
 from config import db, ma
 from marshmallow import Schema, fields, validate
+from models.brand import Brand
+from models.time_zone import TimeZone
 
 class Property(db.Model):
     __tablename__ = "def_property"
@@ -10,12 +12,12 @@ class Property(db.Model):
     trade_name = db.Column(db.String(45), nullable=False)
     property_code = db.Column(db.String(6), nullable=False)
     web_address = db.Column(db.String(300), nullable=False)
-    iddef_brand = db.Column(db.Integer)
+    iddef_brand = db.Column(db.Integer, db.ForeignKey("def_brand.iddef_brand"))
     iddef_property_type = db.Column(db.Integer)
     push_property = db.Column(db.Integer)
     icon_logo_name = db.Column(db.String(50), nullable=False)
-    iddef_time_zone = db.Column(db.Integer)
-    sender = db.Column(db.String(50), nullable=False)
+    iddef_time_zone = db.Column(db.Integer, db.ForeignKey("def_time_zone.iddef_time_zone"))
+    sender = db.Column(db.String(150), nullable=False)
     estado = db.Column(db.Integer)
     usuario_creacion = db.Column(db.String(45), nullable=False)
     fecha_creacion = db.Column(db.DateTime, default=datetime.utcnow)
@@ -35,7 +37,7 @@ class PropertySchema(ma.Schema):
     push_property = fields.Integer()
     icon_logo_name = fields.String(required=True, validate=validate.Length(max=50))
     iddef_time_zone = fields.Integer()
-    sender = fields.String(required=True, validate=validate.Length(max=50))
+    sender = fields.String(required=True, validate=validate.Length(max=150))
     estado = fields.Integer()
     usuario_creacion = fields.String(required=True, validate=validate.Length(max=45))
     fecha_creacion = fields.DateTime("%Y-%m-%d %H:%M:%S")

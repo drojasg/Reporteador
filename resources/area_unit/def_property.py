@@ -136,7 +136,7 @@ class DefProperty(Resource):
         return response
 
     #api-area-unit-post
-    @base.access_middleware
+    #@base.access_middleware
     def post(self):
         response = {}
 
@@ -145,11 +145,21 @@ class DefProperty(Resource):
             schema = ModelSchema(exclude=Util.get_default_excludes())
             data = schema.load(json_data)
             model = Model()
-            user_data = base.get_token_data()
-            user_name = user_data['user']['username']
-
-            model.description = data["description"]
+            #user_data = base.get_token_data()
+            user_name = "admin"
+            #iddef_property = data["iddef_property"]
+            model.short_name = data["short_name"]
+            model.trade_name = data["trade_name"]
+            model.property_code = data["property_code"]
+            model.web_address = data["web_address"]
+            model.iddef_brand = data["iddef_brand"]
+            model.iddef_property_type = data["iddef_property_type"]
+            model.push_property = data["push_property"]
+            model.icon_logo_name = data["icon_logo_name"]
+            model.iddef_time_zone = data["iddef_time_zone"]
+            model.sender = data["sender"]
             model.estado = data["estado"]
+
             model.usuario_creacion = user_name
             
             db.session.add(model)
