@@ -9,4 +9,4 @@
     :license: Private.
 """
 
-from resources import area_unit
+from resources import area_unit, index, property

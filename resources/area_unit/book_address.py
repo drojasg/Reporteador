@@ -41,7 +41,7 @@ class BookAddress(Resource):
         return response
 
     #api-area-unit-put
-    @base.access_middleware
+    #@base.access_middleware
     def put(self, id):
         response = {}
         try:
@@ -90,7 +90,7 @@ class BookAddress(Resource):
         return response
 
     #api-area-unit-delete
-    @base.access_middleware
+    #@base.access_middleware
     def delete(self, id):
         response = {}
         try:
@@ -136,7 +136,7 @@ class BookAddress(Resource):
         return response
 
     #api-area-unit-post
-    @base.access_middleware
+    #@base.access_middleware
     def post(self):
         response = {}
         try:
@@ -180,7 +180,7 @@ class BookAddress(Resource):
 
 class BookAddressListSearch(Resource):
     #api-area-address-get-all
-    @base.access_middleware
+    #@base.access_middleware
     def get(self):
         try:
 

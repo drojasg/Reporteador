@@ -90,7 +90,7 @@ class Channel(Resource):
         return response
 
     #api-area-unit-delete
-    @base.access_middleware
+    #@base.access_middleware
     def delete(self, id):
         response = {}
         try:

@@ -1,0 +1,92 @@
+from datetime import datetime
+
+from config import db, ma
+from marshmallow import Schema, fields, validate
+from models.restriction import Restriction
+
+class RestrictionDetail(db.Model):
+    __tablename__ = "def_restriction_detail"
+
+    iddef_restriction_detail = db.Column(db.Integer, primary_key=True)
+    iddef_restriction = db.Column(db.Integer, db.ForeignKey("def_restriction.iddef_restriction"), nullable=False)
+    channel_option = db.Column(db.Integer,nullable=False)
+    specific_channels = db.Column(db.JSON, nullable=False)
+    travel_window_option = db.Column(db.Integer,nullable=False)
+    travel_window = db.Column(db.JSON, nullable=False)
+    bookable_weekdays = db.Column(db.JSON, nullable=False)
+    bookable_weekdays_option = db.Column(db.Integer,nullable=False)
+    booking_window_option = db.Column(db.Integer,nullable=False)
+    booking_window_dates = db.Column(db.JSON, nullable=False)
+    booking_window_times = db.Column(db.JSON, nullable=False)
+    geo_targeting_option = db.Column(db.Integer,nullable=False)
+    geo_targeting_countries = db.Column(db.JSON, nullable=False)
+    market_option = db.Column(db.Integer,nullable=False)
+    market_targeting = db.Column(db.JSON, nullable=False)
+    device_type_option= db.Column(db.Integer,nullable=False)
+    restriction_default = db.Column(db.Integer,nullable=False)
+    min_los = db.Column(db.Integer,nullable=False, default=0)
+    max_los = db.Column(db.Integer,nullable=False, default=0)
+    value = db.Column(db.JSON, nullable=False, default=[])
+    estado = db.Column(db.Integer,nullable=False)
+    usuario_creacion = db.Column(db.String(45), nullable=False, default="")
+    fecha_creacion = db.Column(db.DateTime, default=datetime.utcnow)
+    usuario_ultima_modificacion = db.Column(db.String(45), default="")
+    fecha_ultima_modificacion = db.Column(db.DateTime, default="1900-01-01 00:00:00", onupdate=datetime.utcnow)
+    name = db.relationship('Restriction', lazy='select', backref=db.backref('def_restriction', lazy='joined'))
+   
+
+class RestrictionDetailSchema(ma.Schema):
+    iddef_restriction_detail = fields.Integer(read_only=True)
+    iddef_restriction = fields.Integer(required=True)
+    channel_option = fields.String(validate=validate.Length(max=4), required=True)
+    specific_channels = fields.Dict(required=True)
+    travel_window_option = fields.String(validate=validate.Length(max=4), required=True)
+    travel_window = fields.Dict(required=True)
+    booking_window_option = fields.String(validate=validate.Length(max=4), required=True)
+    booking_window_dates = fields.Dict(required=True)
+    bookable_weekdays_option = fields.String(validate=validate.Length(max=4), required=True)
+    bookable_weekdays = fields.Dict(required=True)
+    booking_window_times = fields.Dict(required=True)
+    geo_targeting_option = fields.String(validate=validate.Length(max=4), required=True)
+    geo_targeting_countries = fields.Dict(required=True)
+    market_option = fields.String(validate=validate.Length(max=4), required=True)
+    market_targeting = fields.Dict(required=True)
+    device_type_option= fields.String(validate=validate.Length(max=4), required=True)
+    min_los = fields.Integer()
+    max_los = fields.Integer()
+    value = fields.Dict()
+    restriction_default = fields.Integer()
+    estado = fields.Integer()
+    usuario_creacion = fields.String(required=True, validate=validate.Length(max=45))
+    fecha_creacion = fields.DateTime("%Y-%m-%d %H:%M:%S")
+    usuario_ultima_modificacion = fields.String(validate=validate.Length(max=45))
+    fecha_ultima_modificacion = fields.DateTime("%Y-%m-%d %H:%M:%S")
+    name = ma.Pluck("RestrictionSchema", 'name')
+    
+class RestrictionDetailRefSchema(ma.Schema):
+    iddef_restriction_detail = fields.Integer(dump_only=True)
+    iddef_restriction = fields.Integer(required=True)
+    channel_option = fields.String(validate=validate.Length(max=4), required=True)
+    specific_channels = fields.Dict(required=True)
+    travel_window_option = fields.String(validate=validate.Length(max=4), required=True)
+    travel_window = fields.Dict(required=True)
+    booking_window_option = fields.String(validate=validate.Length(max=4), required=True)
+    booking_window_dates = fields.Dict(required=True)
+    geo_targeting_option = fields.String(validate=validate.Length(max=4), required=True)
+    geo_targeting_countries = fields.Dict(required=True)
+    device_type_option= fields.String(validate=validate.Length(max=4), required=True)
+    min_los = fields.Integer(required=True)
+    max_los = fields.Integer(required=True)
+    value = fields.Dict(required=True)
+    estado = fields.Integer()
+    usuario_creacion = fields.String(required=True, validate=validate.Length(max=45))
+    fecha_creacion = fields.DateTime("%Y-%m-%d %H:%M:%S")
+    usuario_ultima_modificacion = fields.String(validate=validate.Length(max=45))
+    fecha_ultima_modificacion = fields.DateTime("%Y-%m-%d %H:%M:%S")
+
+class RestrictionDetailRoomRateplan(ma.Schema):
+    travel_window_start = fields.Date(required=True)
+    travel_window_end = fields.Date(required=True)
+    idproperty = fields.Integer(required=True)
+    idroom = fields.Integer(required=True)
+

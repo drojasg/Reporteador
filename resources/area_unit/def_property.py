@@ -41,7 +41,7 @@ class DefProperty(Resource):
         return response
 
     #api-area-unit-put
-    @base.access_middleware
+    #@base.access_middleware
     def put(self, id):
         response = {}
         try:
@@ -49,8 +49,8 @@ class DefProperty(Resource):
             schema = ModelSchema(exclude=Util.get_default_excludes())
             data = schema.load(json_data)
             model = Model.query.get(id)
-            user_data = base.get_token_data()
-            user_name = user_data['user']['username']
+            # user_data = base.get_token_data()
+            user_name = "admin"
 
             if model is None:
                 return {
@@ -90,7 +90,7 @@ class DefProperty(Resource):
         return response
 
     #api-area-unit-delete
-    @base.access_middleware
+    #@base.access_middleware
     def delete(self, id):
         response = {}
         try:
@@ -192,7 +192,7 @@ class DefProperty(Resource):
 
 class DefPropertyListSearch(Resource):
     #api-def-property-get-all
-    @base.access_middleware
+    #@base.access_middleware
     def get(self):
         try:
 

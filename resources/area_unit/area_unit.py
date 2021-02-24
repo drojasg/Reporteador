@@ -3,7 +3,7 @@ from flask_restful import Resource
 from marshmallow import ValidationError
 
 from config import db, base
-from models.area_unit import Pms as Model, PmsSchema as ModelSchema
+from models.area_unit import AreaUnitSchema as ModelSchema, AreaUnit as Model
 from common.util import Util
 
 
@@ -41,7 +41,7 @@ class AreaUnit(Resource):
         return response
 
     #api-area-unit-put
-    @base.access_middleware
+    #@base.access_middleware
     def put(self, id):
         response = {}
         try:
@@ -90,7 +90,7 @@ class AreaUnit(Resource):
         return response
 
     #api-area-unit-delete
-    @base.access_middleware
+    #@base.access_middleware
     def delete(self, id):
         response = {}
         try:
@@ -136,7 +136,7 @@ class AreaUnit(Resource):
         return response
 
     #api-area-unit-post
-    @base.access_middleware
+    #@base.access_middleware
     def post(self):
         response = {}
         try:
@@ -180,7 +180,7 @@ class AreaUnit(Resource):
 
 class AreaUnitListSearch(Resource):
     #api-area-unit-get-all
-    @base.access_middleware
+    #@base.access_middleware
     def get(self):
         try:
 

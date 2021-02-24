@@ -1,0 +1,201 @@
+from datetime import datetime
+
+from config import db, ma
+from marshmallow import Schema, fields, validate
+from models.property import Property
+from models.restriction_by import RestrictionBy
+from models.restriction_type import RestrictionType
+from common.util import Util
+
+class Restriction(db.Model):
+    __tablename__ = "def_restriction"
+
+    iddef_restriction = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(150), nullable=False)
+    iddef_restriction_by = db.Column(db.Integer, db.ForeignKey("def_restriction_by.iddef_restriction_by"), nullable=False)
+    iddef_restriction_type = db.Column(db.Integer, db.ForeignKey("def_restriction_type.iddef_restriction_type"), nullable=False)
+    estado = db.Column(db.Integer,nullable=False)
+    usuario_creacion = db.Column(db.String(45), nullable=False, default="")
+    fecha_creacion = db.Column(db.DateTime, default=datetime.utcnow)
+    usuario_ultima_modificacion = db.Column(db.String(45), default="")
+    fecha_ultima_modificacion = db.Column(
+    db.DateTime, default="1900-01-01 00:00:00", onupdate=datetime.utcnow)
+    restrictionby = db.relationship('RestrictionBy', backref=db.backref('def_restriction_by', lazy='dynamic'))
+    restrictiontype = db.relationship('RestrictionType', backref=db.backref('def_restriction_type', lazy='dynamic'))
+
+
+class RestrictionSchema(ma.Schema):
+    iddef_restriction = fields.Integer(dump_only=True)
+    name = fields.String(required=True, validate=validate.Length(max=150))
+    iddef_restriction_by = fields.Integer(required=True)
+    iddef_restriction_type = fields.Integer(required=True)
+    estado = fields.Integer()
+    usuario_creacion = fields.String(required=True, validate=validate.Length(max=45))
+    fecha_creacion = fields.DateTime("%Y-%m-%d %H:%M:%S")
+    usuario_ultima_modificacion = fields.String(validate=validate.Length(max=45))
+    fecha_ultima_modificacion = fields.DateTime("%Y-%m-%d %H:%M:%S")
+    restrictionby = ma.Pluck("RestrictionBySchema", 'code')
+    restrictiontype = ma.Pluck("RestrictionTypeSchema", 'code')
+
+class RestrictionRefSchema(ma.Schema):
+    iddef_restriction = fields.Integer(dump_only=True)
+    name = fields.String(required=True, validate=validate.Length(max=150))
+    iddef_restriction_by = fields.Integer(required=True)
+    iddef_restriction_type = fields.Integer(required=True)
+    estado = fields.Integer()
+    usuario_creacion = fields.String(required=True, validate=validate.Length(max=45))
+    fecha_creacion = fields.DateTime("%Y-%m-%d %H:%M:%S")
+    usuario_ultima_modificacion = fields.String(validate=validate.Length(max=45))
+    fecha_ultima_modificacion = fields.DateTime("%Y-%m-%d %H:%M:%S")
+
+
+class RestrictionPostSchema(ma.Schema):
+    iddef_restriction = fields.Integer(read_only=True)
+    name = fields.String(required=True, validate=validate.Length(max=150))
+    iddef_restriction_by = fields.Integer(required=True)
+    iddef_restriction_type = fields.Integer(required=True)
+    estado = fields.Integer()
+    usuario_creacion = fields.String(required=True, validate=validate.Length(max=45))
+    fecha_creacion = fields.DateTime("%Y-%m-%d %H:%M:%S")
+    usuario_ultima_modificacion = fields.String(validate=validate.Length(max=45))
+    fecha_ultima_modificacion = fields.DateTime("%Y-%m-%d %H:%M:%S")
+    data = fields.Raw()
+    
+class RestrictionPutSchema(ma.Schema):
+    iddef_restriction = fields.Integer(required=True)
+    name = fields.String(required=True, validate=validate.Length(max=150))
+    iddef_restriction_by = fields.Integer(required=True)
+    iddef_restriction_type = fields.Integer(required=True)
+    estado = fields.Integer()
+    usuario_creacion = fields.String(required=True, validate=validate.Length(max=45))
+    fecha_creacion = fields.DateTime("%Y-%m-%d %H:%M:%S")
+    usuario_ultima_modificacion = fields.String(validate=validate.Length(max=45))
+    fecha_ultima_modificacion = fields.DateTime("%Y-%m-%d %H:%M:%S")
+    data = fields.Raw()
+
+class RestrictionPostSchema2(ma.Schema):
+    iddef_restriction = fields.Integer(read_only=True)
+    name = fields.String(required=True, validate=validate.Length(max=150))
+    iddef_restriction_by = fields.Integer()
+    iddef_restriction_type = fields.Integer()
+    estado = fields.Integer()
+    usuario_creacion = fields.String(required=True, validate=validate.Length(max=45))
+    fecha_creacion = fields.DateTime("%Y-%m-%d %H:%M:%S")
+    usuario_ultima_modificacion = fields.String(validate=validate.Length(max=45))
+    fecha_ultima_modificacion = fields.DateTime("%Y-%m-%d %H:%M:%S")
+    data = fields.Raw()
+    
+class RestrictionPutSchema2(ma.Schema):
+    iddef_restriction = fields.Integer(required=True)
+    name = fields.String(required=True, validate=validate.Length(max=150))
+    iddef_restriction_by = fields.Integer()
+    iddef_restriction_type = fields.Integer()
+    estado = fields.Integer()
+    usuario_creacion = fields.String(required=True, validate=validate.Length(max=45))
+    fecha_creacion = fields.DateTime("%Y-%m-%d %H:%M:%S")
+    usuario_ultima_modificacion = fields.String(validate=validate.Length(max=45))
+    fecha_ultima_modificacion = fields.DateTime("%Y-%m-%d %H:%M:%S")
+    data = fields.Raw()
+
+class RestrictionDetailDataSchema(ma.Schema):
+    iddef_restriction_detail = fields.Integer(read_only=True)
+    iddef_restriction = fields.Integer(required=True)
+    channel_option = fields.Integer()
+    specific_channels = fields.List(fields.Integer())
+    travel_window_option = fields.Integer()
+    travel_window = fields.List(fields.Dict())
+    booking_window_option = fields.Integer()
+    booking_window_dates = fields.List(fields.Dict())
+    booking_window_times = fields.List(fields.Dict())
+    bookable_weekdays = fields.List(fields.String())
+    bookable_weekdays_option = fields.Integer()
+    geo_targeting_option = fields.Integer()
+    geo_targeting_countries = fields.List(fields.String())
+    market_option = fields.Integer()
+    market_targeting = fields.List(fields.Integer())
+    device_type_option= fields.Integer()
+    restriction_default = fields.Integer()
+    min_los = fields.Integer(required=True)
+    max_los = fields.Integer(required=True)
+    value = fields.Dict()
+    estado = fields.Integer()
+    usuario_creacion = fields.String(required=True, validate=validate.Length(max=45))
+    fecha_creacion = fields.DateTime("%Y-%m-%d %H:%M:%S")
+    usuario_ultima_modificacion = fields.String(validate=validate.Length(max=45))
+    fecha_ultima_modificacion = fields.DateTime("%Y-%m-%d %H:%M:%S")
+
+class RestrictionDetailDataSchema2(ma.Schema):
+    iddef_restriction_detail = fields.Integer(read_only=True)
+    iddef_restriction = fields.Integer()
+    channel_option = fields.Integer()
+    specific_channels = fields.List(fields.Integer())
+    travel_window_option = fields.Integer()
+    travel_window = fields.List(fields.Dict())
+    booking_window_option = fields.Integer()
+    booking_window_dates = fields.List(fields.Dict())
+    booking_window_times = fields.List(fields.Dict())
+    bookable_weekdays = fields.List(fields.String())
+    bookable_weekdays_option = fields.Integer()
+    geo_targeting_option = fields.Integer()
+    geo_targeting_countries = fields.List(fields.String())
+    market_option = fields.Integer()
+    market_targeting = fields.List(fields.Integer())
+    device_type_option= fields.Integer()
+    restriction_default= fields.Integer()
+    min_los = fields.Integer(required=True)
+    max_los = fields.Integer(required=True)
+    value = fields.Dict()
+    estado = fields.Integer()
+    usuario_creacion = fields.String(required=True, validate=validate.Length(max=45))
+    fecha_creacion = fields.DateTime("%Y-%m-%d %H:%M:%S")
+    usuario_ultima_modificacion = fields.String(validate=validate.Length(max=45))
+    fecha_ultima_modificacion = fields.DateTime("%Y-%m-%d %H:%M:%S")
+
+class RestrictionDataRestrictionDetailSchema(ma.Schema):
+    iddef_restriction = fields.Integer(dump_only=True)
+    name = fields.String(required=True, validate=validate.Length(max=150))
+    iddef_restriction_by = fields.Integer(required=True)
+    iddef_restriction_type = fields.Integer(required=True)
+    iddef_restriction_detail = fields.Integer(read_only=True)
+    channel_option = fields.String(validate=validate.Length(max=4), required=True)
+    specific_channels = fields.Dict(required=True)
+    travel_window_option = fields.String(validate=validate.Length(max=4), required=True)
+    travel_window = fields.Dict(required=True)
+    booking_window_option = fields.String(validate=validate.Length(max=4), required=True)
+    booking_window_dates = fields.Dict(required=True)
+    bookable_weekdays_option = fields.String(validate=validate.Length(max=4), required=True)
+    bookable_weekdays = fields.Dict(required=True)
+    booking_window_times = fields.Dict(required=True)
+    geo_targeting_option = fields.String(validate=validate.Length(max=4), required=True)
+    geo_targeting_countries = fields.Dict(required=True)
+    market_option = fields.String(validate=validate.Length(max=4), required=True)
+    market_targeting = fields.Dict(required=True)
+    device_type_option= fields.String(validate=validate.Length(max=4), required=True)
+    restriction_default = fields.Integer()
+    min_los = fields.Integer(required=True)
+    max_los = fields.Integer(required=True)
+    value = fields.Dict(required=True)
+    estado = fields.Integer()
+    usuario_creacion = fields.String(required=True, validate=validate.Length(max=45))
+    fecha_creacion = fields.DateTime("%Y-%m-%d %H:%M:%S")
+    usuario_ultima_modificacion = fields.String(validate=validate.Length(max=45))
+    fecha_ultima_modificacion = fields.DateTime("%Y-%m-%d %H:%M:%S")
+
+class OperaDetailRestrictionSchema(ma.Schema):
+    date_start = fields.Date(required=True)
+    date_end = fields.Date(required=True)
+    use_close = fields.Boolean(required=True)
+    close = fields.Boolean(required=True)
+    use_min = fields.Boolean(required=True)
+    min_los = fields.Integer(required=True)
+    use_max = fields.Boolean(required=True)
+    max_los = fields.Integer(required=True)
+
+class OperaDataRestrictionSchema(ma.Schema):
+    property = fields.String(required=True, validate=validate.Length(max=6))
+    room = fields.String(required=True, validate=validate.Length(max=10))
+    restrictions = fields.Nested(OperaDetailRestrictionSchema, many=True, required=True)
+
+class OperaInsertRestrictionSchema(ma.Schema):
+    restriction_type = fields.String(required=True)
+    data = fields.Nested(OperaDataRestrictionSchema, many=True, required=True)
