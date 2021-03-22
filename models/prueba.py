@@ -1,17 +1,7 @@
 from datetime import datetime
-
+from sqlalchemy.sql.expression import and_
 from config import db, ma
 from marshmallow import Schema, fields, validate
-from models.segment import Segment
-from models.property_type import PropertyType
-from models.brand import Brand
-from models.area_unit import AreaUnit, AreaUnitSchema
-from models.property_category import PropertyCategory
-from models.zones import Zones
-from models.time_zone import TimeZone, TimeZoneSchema
-from models.media import publicGetListMedia
-from models.amenity import publicAmenities
-from .contact import Contact, ContactSchema
 from .policy import Policy, PolicySchema
 from common.util import Util
 

@@ -1,4 +1,4 @@
 from config import api 
-from.prueba import PruebaSearch, PruebaBookingSchema
+from.prueba import PruebaSearch
 
-api.add_resource(PruebaSearch, '/api/prueba/search/',endpoint="api-prueba-get", methods=["GET"])
+api.add_resource(PruebaSearch, '/api/prueba/search/<int:estado>',endpoint="api-prueba-get-by-estado", methods=["GET"])
