@@ -1,52 +1,38 @@
 from flask import Flask, request
 from flask_restful import Resource
+from marshmallow import ValidationError
+from datetime import date, datetime, timedelta
+from sqlalchemy.sql.expression import and_
+from functools import reduce
 from config import db, base
-from models.prueba import PruebaBooking, PruebaBookingSchema
 from common.util import Util
-from sqlalchemy import or_, and_
-from datetime import datetime as dt
-from dateutil.parser import parse
-from common.public_auth import PublicAuth
+from models.prueba import PruebaBooking as Model, PruebaBookingSchema as ModelSchema
 
 class PruebaSearch(Resource):
-   def getBookEstado1(self, estado):
-        response = {}
-        try:
-            json_data = request.get_json(force=True)
-            schema = pModel.query.filter(pModel.estado == 1)
-            data = schema.load(json_data)
-            model = Model.query.get(estado)
+    def get(self):
+        try: 
+            data = Model.query.filter(Model.estado == 1)
+            schema = ModelSchema()
             
-            if model is None:
-                return {
-                    "Code": 404,
-                    "Msg": "data not found",
-                    "Error": True,
-                    "data": {}
-                    }
-
-            result = schema.dump(model)
-
-            response = {
-                "Code": 200,
-                "Msg": "Success",
-                "Error": False,
-                "data": result
-            }
-        except ValidationError as error:
+            if data is None:
                 response = {
-                    "Code": 500,
-                    "Msg": error.messages,
-                    "Error": True,
+                    "Code": 200,
+                    "Msg": "Success",
+                    "Error": False,
                     "data": {}
+                }
+            else:
+                response = {
+                    "Code": 200,
+                    "Msg": "Success",
+                    "Error": False,
+                    "data": schema.dump(data)
                 }
         except Exception as e:
-                db.session.rollback()
-                response = {
-                    "Code": 500,
-                    "Msg": str(e),
-                    "Error": True,
-                    "data": {}
-                }
-
+            response = {
+                "Code": 500,
+                "Msg": str(e),
+                "Error": True,
+                "data":{}
+            }
         return response
