@@ -51,7 +51,7 @@ class BookHotel(db.Model):
     device_request = db.Column(db.String(50), nullable=False, default="desktop")
     expiry_date = db.Column(db.DateTime, default="1900-01-01 00:00:00")
     cancelation_date = db.Column(db.DateTime, default="1900-01-01 00:00:00")
-    visible_reason_cancellation = db.Column(db.Integer, default=0)
+    #visible_reason_cancellation = db.Column(db.Integer, default=0)
     modification_date_booking = db.Column(db.DateTime, default="1900-01-01 00:00:00")
     estado = db.Column(db.Integer, nullable=False)
     usuario_creacion = db.Column(db.String(45), nullable=False)
