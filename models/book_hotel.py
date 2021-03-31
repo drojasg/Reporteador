@@ -76,8 +76,8 @@ class BookHotel(db.Model):
         primaryjoin="and_(BookHotel.idbook_hotel == BookExtraService.idbook_hotel, BookExtraService.estado == 1)")
     payments = db.relationship('PaymentTransaction', backref="hotel", lazy="select",
         primaryjoin="and_(BookHotel.idbook_hotel == PaymentTransaction.idbook_hotel, PaymentTransaction.estado != 0)")
-    promotions = db.relationship('BookPromotion', backref="hotel", lazy="select", 
-        primaryjoin="and_(BookHotel.idbook_hotel == BookPromotion.idbook_hotel, BookPromotion.estado == 1)")
+    # promotions = db.relationship('BookPromotion', backref="hotel", lazy="select", 
+    #     primaryjoin="and_(BookHotel.idbook_hotel == BookPromotion.idbook_hotel, BookPromotion.estado == 1)")
 
 class BookHotelSchema(ma.Schema):
     idbook_hotel = fields.Integer()        
