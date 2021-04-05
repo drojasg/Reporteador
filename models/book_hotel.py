@@ -222,6 +222,23 @@ class BookHotelReservationSchema(ma.Schema):
     amount_pending_payment = fields.Float(dump_only=True)
     amount_paid = fields.Float(dump_only=True)
     promo_code_text = fields.String(dump_only=True)
+    trade_name = fields.String(attribute =  "pr.trade_name", dump_only = True)
+    property_code = fields.String(attribute = "pr.trade_namae", dump_only = True)
+    currency_code = fields.String(attribute = "ms.currency_code", dump_only = True)
+    description = fields.String(attribute = "ms.description", dump_only = True)
+    name = fields.String(atirbute = "co.name", dump_only = True)
+    country_code = fields.String(attribute = "co.country_code", dump_only = True)
+    iddef_channel = fields.Integer(attribute = "ch.iddef_channel", dump_only = True)
+    name = fields.String(attribute = "ch.name", dump_only = True)
+    iddef_currency = fields.Integer(attribute = "cu.iddef_currency", dump_only = True)
+    currency_code = fields.String(attribute = "cu.currency_code", dump_only = True)
+    description = fields.String(attribute = "cu.description", dump_only = True)
+    iddef_language = fields.Integer(attribute = "lan.iddef_language", dump_only = True)
+    lang_code = fields.String(attribute = "lan.lang_code", dump_only = True)
+    description = fields.String(attribute = "lan.description", dump_only = True)
+    name = fields.String(attribute = "bs.name", dump_only = True)
+    code = fields.String(attribute = "bs.code", dump_only = True)
+    description = fields.String(attribute = "bs.description", dump_only = True)
     
     @validates_schema
     def validate_reservation(self, data, **kwargs):

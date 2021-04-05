@@ -23,71 +23,70 @@ class PruebaSearch(Resource):
             #     filter(Model.estado == 1).first()
             # mydict = create_dict()
             query = """ select 
-                        book_hotel.idbook_hotel, 
-                        book_hotel.code_reservation as "Codigo_reservacion",
-                        book_hotel.iddef_property,
-                        def_property.short_name as "Hotel Name",
-                        def_property.trade_name,
-                        def_property.property_code as "Hotel Code",  
-                        book_hotel.from_date,
-                        book_hotel.to_date,
-                        book_hotel.nights,
-                        book_hotel.adults,
-                        book_hotel.child,
-                        book_hotel.total_rooms,
-                        book_hotel.iddef_market_segment,
-                        def_market_segment.currency_code,
-                        def_market_segment.description as "Market Description",
-                        book_hotel.iddef_country,
-                        def_country.name as "Country Name",
-                        def_country.country_code,
-                        def_channel.iddef_channel,
-                        def_channel.name as "Channel Name",
-                        def_currency.iddef_currency,
-                        def_currency.currency_code,
-                        def_currency.description as "Currency description",
-                        def_language.iddef_language,
-                        def_language.lang_code,
-                        def_language.description as "Language description",
-                        book_hotel.exchange_rate,
-                        book_hotel.promo_amount,
-                        book_hotel.discount_percent,
-                        book_hotel.discount_amount,
-                        book_hotel.total_gross,
-                        book_hotel.fee_amount,
-                        book_hotel.country_fee,
-                        book_hotel.amount_pending_payment,
-                        book_hotel.amount_paid,
-                        book_hotel.total,
-                        book_hotel.promotion_amount,
-                        book_hotel.last_refund_amount,
-                        book_hotel.idbook_status,
-                        book_status.name as "Status name",
-                        book_status.code as "Status code",
-                        book_status.description as "Status code",
-                        book_hotel.device_request,
-                        book_hotel.expiry_date,
-                        book_hotel.cancelation_date,
-                        book_hotel.modification_date_booking,
-                        book_hotel.estado,
-                        book_hotel.usuario_creacion,
-                        book_hotel.fecha_creacion,
-                        book_hotel.usuario_ultima_modificacion,
-                        book_hotel.fecha_ultima_modificacion
+                        book_hotel.idbook_hotel,\
+                        book_hotel.code_reservation as "Codigo_reservacion",\
+                        book_hotel.iddef_property,\
+                        pr.trade_name,\
+                        pr.property_code as "Hotel Code",\
+                        book_hotel.from_date,\
+                        book_hotel.to_date,\
+                        book_hotel.nights,\
+                        book_hotel.adults,\
+                        book_hotel.child,\
+                        book_hotel.total_rooms,\
+                        book_hotel.iddef_market_segment,\
+                        ms.currency_code,\
+                        ms.description as "Market Description",\
+                        book_hotel.iddef_country,\
+                        co.name as "Country Name",\
+                        co.country_code,\
+                        ch.iddef_channel,\
+                        ch.name as "Channel Name",\
+                        cu.iddef_currency,\
+                        cu.currency_code,\
+                        cu.description as "Currency description",\
+                        lan.iddef_language,\
+                        lan.lang_code,\
+                        lan.description as "Language description",\
+                        book_hotel.exchange_rate,\
+                        book_hotel.promo_amount,\
+                        book_hotel.discount_percent,\
+                        book_hotel.discount_amount,\
+                        book_hotel.total_gross,\
+                        book_hotel.fee_amount,\
+                        book_hotel.country_fee,\
+                        book_hotel.amount_pending_payment,\
+                        book_hotel.amount_paid,\
+                        book_hotel.total,\
+                        book_hotel.promotion_amount,\
+                        book_hotel.last_refund_amount,\
+                        bs.idbook_status,\
+                        bs.name as "Status name",\
+                        bs.code as "Status code",\
+                        bs.description as "Status code",\
+                        book_hotel.device_request,\
+                        book_hotel.expiry_date,\
+                        book_hotel.cancelation_date,\
+                        book_hotel.modification_date_booking,\
+                        book_hotel.estado,\
+                        book_hotel.usuario_creacion,\
+                        book_hotel.fecha_creacion,\
+                        book_hotel.usuario_ultima_modificacion,\
+                        book_hotel.fecha_ultima_modificacion\
 
                         from book_hotel 
 
-                        inner join def_property on book_hotel.iddef_property = def_property.iddef_property 
-                        inner join def_market_segment on book_hotel.iddef_market_segment = def_market_segment.iddef_market_segment
-                        inner join def_country on book_hotel.iddef_country = def_country.iddef_country
-                        inner join def_channel on book_hotel.iddef_channel = def_channel.iddef_channel
-                        inner join def_currency on book_hotel.iddef_currency  = def_currency.iddef_currency
-                        inner join def_language on book_hotel.iddef_language = def_language.iddef_language
-                        inner join book_status on book_hotel.idbook_status = book_status.idbook_status
+                        inner join def_property pr on book_hotel.iddef_property = pr.iddef_property 
+                        inner join def_market_segment ms on book_hotel.iddef_market_segment = ms.iddef_market_segment
+                        inner join def_country co on book_hotel.iddef_country = co.iddef_country
+                        inner join def_channel ch on book_hotel.iddef_channel = ch.iddef_channel
+                        inner join def_currency cu on book_hotel.iddef_currency  = cu.iddef_currency
+                        inner join def_language lan on book_hotel.iddef_language = lan.iddef_language
+                        inner join book_status bs on book_hotel.idbook_status = bs.idbook_status
 
                         where book_hotel.estado=1; 
                     """
-            book_hotel = db.session.execute(query)
+            book_hotel = db.session.execute(query).fetchall()
             print(book_hotel)
             # data = {
             #     "idbook_hotel": book_hotel.idbook_hotel,
@@ -170,7 +169,8 @@ class PruebaSearch(Resource):
             #                 "fecha_ultima_modificacion":row[50]}))  
             # stud_json = json.dumps(mydict, indent = 2, default = str)
             #print(data)
-            schema = resschema()
+            schema = resschema(many = True)
+            print(schema)
             response = {
                 "Code": 200,
                 "Msg": "Success",
