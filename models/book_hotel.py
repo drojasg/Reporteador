@@ -51,7 +51,7 @@ class BookHotel(db.Model):
     device_request = db.Column(db.String(50), nullable=False, default="desktop")
     expiry_date = db.Column(db.DateTime, default="1900-01-01 00:00:00")
     cancelation_date = db.Column(db.DateTime, default="1900-01-01 00:00:00")
-    visible_reason_cancellation = db.Column(db.Integer, default=0)
+    #visible_reason_cancellation = db.Column(db.Integer, default=0)
     modification_date_booking = db.Column(db.DateTime, default="1900-01-01 00:00:00")
     estado = db.Column(db.Integer, nullable=False)
     usuario_creacion = db.Column(db.String(45), nullable=False)
@@ -76,8 +76,8 @@ class BookHotel(db.Model):
         primaryjoin="and_(BookHotel.idbook_hotel == BookExtraService.idbook_hotel, BookExtraService.estado == 1)")
     payments = db.relationship('PaymentTransaction', backref="hotel", lazy="select",
         primaryjoin="and_(BookHotel.idbook_hotel == PaymentTransaction.idbook_hotel, PaymentTransaction.estado != 0)")
-    promotions = db.relationship('BookPromotion', backref="hotel", lazy="select", 
-        primaryjoin="and_(BookHotel.idbook_hotel == BookPromotion.idbook_hotel, BookPromotion.estado == 1)")
+    # promotions = db.relationship('BookPromotion', backref="hotel", lazy="select", 
+    #     primaryjoin="and_(BookHotel.idbook_hotel == BookPromotion.idbook_hotel, BookPromotion.estado == 1)")
 
 class BookHotelSchema(ma.Schema):
     idbook_hotel = fields.Integer()        
@@ -222,6 +222,23 @@ class BookHotelReservationSchema(ma.Schema):
     amount_pending_payment = fields.Float(dump_only=True)
     amount_paid = fields.Float(dump_only=True)
     promo_code_text = fields.String(dump_only=True)
+    Hotel_Name = fields.String(attribute =  "tr_name", dump_only = True)
+    Property_Code = fields.String(attribute = "pr_code", dump_only = True)
+    Currency_Code = fields.String(attribute = "ms_code", dump_only = True)
+    Market_Description = fields.String(attribute = "ms_description")
+    Country_Name = fields.String(atirbute = "co_name", dump_only = True)
+    Country_Code = fields.String(attribute = "co_code", dump_only = True)
+    Channel_ID = fields.Integer(attribute = "ch_id", dump_only = True)
+    Channel_Name = fields.String(attribute = "ch_name", dump_only = True)
+    Currency_ID = fields.Integer(attribute = "cu_idcurrency", dump_only = True)
+    Currency_Code = fields.String(attribute = "cu_code", dump_only = True)
+    Currency_Description = fields.String(attribute = "currency_description")
+    Language_ID = fields.Integer(attribute = "lan_id", dump_only = True)
+    Language_Code = fields.String(attribute = "lan_code", dump_only = True)
+    Language_Description = fields.String(attribute = "language_description")
+    BookStatus_Name = fields.String(attribute = "bs_name", dump_only = True)
+    BookStatus_Code = fields.String(attribute = "bs_code", dump_only = True)
+    BookStatus_Description = fields.String(attribute = "bs_description", dump_only = True)
     
     @validates_schema
     def validate_reservation(self, data, **kwargs):
