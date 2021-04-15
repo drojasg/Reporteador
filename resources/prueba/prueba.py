@@ -7,7 +7,7 @@ from functools import reduce
 from config import db, base
 from common.util import Util
 from models.book_hotel import BookHotel as Model, BookHotelSchema as bookschema, BookHotelReservationSchema as resschema
-from models.prueba import PruebaBookingSchema
+from models.prueba import PruebaBookingSchema as bookschema1
 import json
 
 class create_dict(dict):
@@ -34,10 +34,8 @@ class PruebaSearch(Resource):
                         book_hotel.adults,\
                         book_hotel.child,\
                         book_hotel.total_rooms,\
-                        book_hotel.iddef_market_segment,\
                         ms.currency_code as ms_code,\
                         ms.description as ms_description,\
-                        book_hotel.iddef_country,\
                         co.name as co_name,\
                         co.country_code as co_code,\
                         ch.iddef_channel as ch_id,\
@@ -88,7 +86,7 @@ class PruebaSearch(Resource):
             book_hotel = db.session.execute(query).fetchall()
             for row in book_hotel:
                 print(row)
-                schema = resschema(many = True)
+                schema = bookschema1(many = True)
             response = {
                 "Code": 200,
                 "Msg": "Success",
