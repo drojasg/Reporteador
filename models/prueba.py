@@ -5,6 +5,8 @@ from marshmallow import Schema, fields, validate
 from .policy import Policy, PolicySchema
 from common.util import Util
 from models.book_hotel import BookHotel
+from models.book_customer import BookCustomerReservationSchema
+from models.book_hotel_room import BookHotelRoomReservationSchema
 
 class PruebaBookingSchema(ma.Schema):
     idbook_hotel = fields.Integer(dump_only = True)
@@ -34,17 +36,11 @@ class PruebaBookingSchema(ma.Schema):
     Market_Description = fields.String(attribute = "ms_description")
     Country_name = fields.String(attribute = "co_name", dump_only = True)
     Country_Code = fields.String(attribute = "co_code", dump_only = True)
-    Channel_ID = fields.Integer(attribute = "ch_id", dump_only = True)
-    Channel_Name = fields.String(attribute = "ch_name", dump_only = True)
-    Currency_ID = fields.Integer(attribute = "cu_idcurrency", dump_only = True)
-    Currency_Code = fields.String(attribute = "cu_code", dump_only = True)
-    Currency_Description = fields.String(attribute = "currency_description")
-    Language_ID = fields.Integer(attribute = "lan_id", dump_only = True)
-    Language_Code = fields.String(attribute = "lan_code", dump_only = True)
-    Language_Description = fields.String(attribute = "language_description")
+    BookStatus_ID = fields.String(attribute = "bs_idBookStatus", dumps_only = True)
     BookStatus_Name = fields.String(attribute = "bs_name", dump_only = True)
     BookStatus_Code = fields.String(attribute = "bs_code", dump_only = True)
     BookStatus_Description = fields.String(attribute = "bs_description", dump_only = True)
+    email = fields.String(attribute = "guest_email", dump_only = True)
     expiry_date = fields.DateTime("%Y-%m-%d %H:%M:%S")
     cancelation_date = fields.DateTime("%Y-%m-%d %H:%M:%S")
     modification_date_booking = fields.DateTime("%Y-%m-%d %H:%M:%S")
@@ -53,3 +49,10 @@ class PruebaBookingSchema(ma.Schema):
     fecha_creacion = fields.DateTime("%Y-%m-%d %H:%M:%S")
     usuario_ultima_modificacion = fields.String(required = True, validate = validate.Length(max = 45))
     fecha_ultima_modificacion = fields.DateTime("%Y-%m-%d %H:%M:%S")
+    guest_name = fields.String()
+    guest_phone = fields.String()
+    room_type = fields.String()
+    rooms = fields.List(fields.Nested(BookHotelRoomReservationSchema(only=("idbook_hotel_room", "iddef_room_type", "idop_rate_plan", "pax",\
+        "trade_name_room", "prices", "discount_percent", "discount_amount", "total_gross", "total", "media", "rateplan_name", "promo_amount"))))
+
+# class PruebaBookingSchemav2(ma.Schema):

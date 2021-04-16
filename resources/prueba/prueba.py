@@ -81,12 +81,12 @@ class PruebaSearch(Resource):
                         inner join def_language lan on book_hotel.iddef_language = lan.iddef_language
                         inner join book_status bs on book_hotel.idbook_status = bs.idbook_status
 
-                        where book_hotel.estado=1; 
+                        where book_hotel.estado=1 order by idbook_hotel; 
                     """
             book_hotel = db.session.execute(query).fetchall()
             for row in book_hotel:
                 print(row)
-                schema = bookschema1(many = True)
+            schema = bookschema1(many = True)
             response = {
                 "Code": 200,
                 "Msg": "Success",
