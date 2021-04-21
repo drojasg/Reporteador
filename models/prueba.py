@@ -55,5 +55,7 @@ class PruebaBookingSchema(ma.Schema):
     hotel_name = fields.String()
     id_rate_plan = fields.Integer()
     rate_plan = fields.String()
+    book_status = fields.String()
+    book_status_description = fields.String()
 
 # class PruebaBookingSchemav2(ma.Schema):
