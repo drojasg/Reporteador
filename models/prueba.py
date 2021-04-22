@@ -10,7 +10,7 @@ from models.book_hotel_room import BookHotelRoomReservationSchema
 
 class PruebaBookingSchema(ma.Schema):
     idbook_hotel = fields.Integer(dump_only = True)
-    code_reservation = fields.String(required = True, validate = validate.Length(max = 60))
+    code_reservation = fields.String(dump_only=True,required = True, validate = validate.Length(max = 60))
     iddef_property = fields.Integer()
     from_date = fields.DateTime("%Y-%m-%d %H:%M:%S")
     to_date = fields.DateTime("%Y-%m-%d %H:%M:%S")
@@ -58,4 +58,7 @@ class PruebaBookingSchema(ma.Schema):
     book_status = fields.String()
     book_status_description = fields.String()
 
-# class PruebaBookingSchemav2(ma.Schema):
+    date_start = fields.DateTime(read_only=True)
+    date_end = fields.DateTime(read_only=True)
+
+#class PruebaBookingSchemaGet(ma.Schema):

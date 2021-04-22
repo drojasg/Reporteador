@@ -13,12 +13,12 @@ import json
 class BookHotelCustomerSearch(Resource):
     def post(self):
         try:
-            data = request.json
+            data = request.get_json(force=True)
             schema = bookschema1(exclude=Util.get_default_excludes())
             data = schema.load(data)
             model = Model()
-            from_date = data['from_date']
-            to_date = data['to_date']
+            from_date = data['date_start']
+            to_date = data['date_end']
 
             # from_date = datetime.strptime(from_date, '%Y-%m-%d %H:%M:%S')
             # to_date = datetime.strptime(to_date, '%Y-%m-%d %H:%M:%S')
