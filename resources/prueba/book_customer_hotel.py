@@ -19,13 +19,15 @@ class BookHotelCustomerSearch(Resource):
             model = Model()
             from_date = data['date_start']
             to_date = data['date_end']
+            book_status = data["status"]
+            property_code = data["property_code"]
 
             # from_date = datetime.strptime(from_date, '%Y-%m-%d %H:%M:%S')
             # to_date = datetime.strptime(to_date, '%Y-%m-%d %H:%M:%S')
 
             # from_date = date_start.replace(hour=00, minute=00, second=00)
             # to_date = date_end.replace(hour=23, minute=59, second=59)
-            
+
             query = ("SELECT\
                         ba.iddef_country,\
                         pr.property_code,\
@@ -65,12 +67,17 @@ class BookHotelCustomerSearch(Resource):
                     	op_rateplan rtp ON rtp.idop_rateplan = bhr.idop_rate_plan\
                     WHERE\
                         bh.estado = 1\
-                    AND CONVERT_TZ(bh.fecha_creacion, '+00:00', '-05:00') BETWEEN '{from_date}' AND '{to_date}'\
-                        ".format(from_date= from_date, to_date= to_date))
-                        
-            book_hotel = db.session.execute(query).fetchall()
-            for row in book_hotel:
-                print(row)
+                    AND\
+                        name in ('{book_status}')\
+                    AND CONVERT_TZ(bh.fecha_creacion, '+00:00', '-05:00') BETWEEN '{from_date}' AND '{to_date}'")
+            
+            if property_code != "":
+                book_hotel = db.session.execute((query +" AND property_code in ('{property_code}')").format(from_date= from_date, to_date= to_date, book_status = book_status, property_code = property_code)).fetchall()
+            else:    
+                book_hotel = db.session.execute(query.format(from_date= from_date, to_date= to_date, book_status = book_status, property_code = property_code)).fetchall()
+            print(query)
+            # for row in book_hotel:
+            #     print(row)
             schema = bookschema1(many = True)
             response = {
                 "Code": 200,

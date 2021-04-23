@@ -55,10 +55,13 @@ class PruebaBookingSchema(ma.Schema):
     hotel_name = fields.String()
     id_rate_plan = fields.Integer()
     rate_plan = fields.String()
+    name = fields.String()
     book_status = fields.String()
     book_status_description = fields.String()
 
     date_start = fields.DateTime(read_only=True)
     date_end = fields.DateTime(read_only=True)
+    status = fields.String(read_only=True)
+    property_code = fields.String(read_only=True)
 
 #class PruebaBookingSchemaGet(ma.Schema):
