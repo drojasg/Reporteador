@@ -22,6 +22,7 @@ class BookHotelCustomerSearch(Resource):
             book_status = data["status"]
             property_code = data["property_code"]
 
+
             # from_date = datetime.strptime(from_date, '%Y-%m-%d %H:%M:%S')
             # to_date = datetime.strptime(to_date, '%Y-%m-%d %H:%M:%S')
 
@@ -67,15 +68,24 @@ class BookHotelCustomerSearch(Resource):
                     	op_rateplan rtp ON rtp.idop_rateplan = bhr.idop_rate_plan\
                     WHERE\
                         bh.estado = 1\
-                    AND\
-                        name in ('{book_status}')\
                     AND CONVERT_TZ(bh.fecha_creacion, '+00:00', '-05:00') BETWEEN '{from_date}' AND '{to_date}'")
             
             if property_code != "":
-                book_hotel = db.session.execute((query +" AND property_code in ('{property_code}')").format(from_date= from_date, to_date= to_date, book_status = book_status, property_code = property_code)).fetchall()
-            else:    
-                book_hotel = db.session.execute(query.format(from_date= from_date, to_date= to_date, book_status = book_status, property_code = property_code)).fetchall()
-            print(query)
+                if book_status != "":
+                    book_hotel = db.session.execute((query +" AND name in ('{book_status}') AND property_code in ('{property_code}')").format(from_date= from_date, to_date= to_date, book_status = book_status, property_code = property_code)).fetchall()
+                    print("1")
+            if property_code != "":
+                if book_status == "":
+                    book_hotel = db.session.execute((query +" AND property_code in ('{property_code}')").format(from_date= from_date, to_date= to_date, book_status = book_status, property_code = property_code)).fetchall()
+                    print("2")
+            if book_status != "":
+                if property_code == "":
+                    book_hotel = db.session.execute((query +" AND name in ('{book_status}')").format(from_date= from_date, to_date= to_date, book_status = book_status, property_code = property_code)).fetchall()
+                    print("3")
+            if book_status == "":
+                if property_code == "":    
+                    book_hotel = db.session.execute(query.format(from_date= from_date, to_date= to_date, book_status = book_status, property_code = property_code)).fetchall()
+                    print("4")
             # for row in book_hotel:
             #     print(row)
             schema = bookschema1(many = True)

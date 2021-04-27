@@ -9,7 +9,7 @@ from models.book_customer import BookCustomerReservationSchema
 from models.book_hotel_room import BookHotelRoomReservationSchema
 
 class PruebaBookingSchema(ma.Schema):
-    idbook_hotel = fields.Integer(dump_only = True)
+    #idbook_hotel = fields.Integer(dump_only = True)
     code_reservation = fields.String(dump_only=True,required = True, validate = validate.Length(max = 60))
     iddef_property = fields.Integer()
     from_date = fields.DateTime("%Y-%m-%d %H:%M:%S")
@@ -63,5 +63,6 @@ class PruebaBookingSchema(ma.Schema):
     date_end = fields.DateTime(read_only=True)
     status = fields.String(read_only=True)
     property_code = fields.String(read_only=True)
+    date_cancelation = fields.DateTime(read_only=True)
 
 #class PruebaBookingSchemaGet(ma.Schema):
