@@ -61,8 +61,8 @@ class PruebaBookingSchema(ma.Schema):
 
     date_start = fields.DateTime(read_only=True)
     date_end = fields.DateTime(read_only=True)
-    status = fields.list(fields.Integer())
-    property_code = fields.list(fields.Integer())
+    idbook_status = fields.List(fields.Integer())
+    iddef_property = fields.List(fields.Integer())
     date_cancelation = fields.DateTime(read_only=True)
 
 #class PruebaBookingSchemaGet(ma.Schema):
