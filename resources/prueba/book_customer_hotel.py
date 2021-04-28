@@ -22,6 +22,10 @@ class BookHotelCustomerSearch(Resource):
             idbook_status = data['idbook_status']
             iddef_property = data['iddef_property']
 
+            def listToStringWithoutBrackets1(idbook_status):
+                return str(idbook_status).replace('[','').replace(']','')
+            def listToStringWithoutBrackets2(iddef_property):
+                return str(iddef_property).replace('[','').replace(']','')
 
             # from_date = datetime.strptime(from_date, '%Y-%m-%d %H:%M:%S')
             # to_date = datetime.strptime(to_date, '%Y-%m-%d %H:%M:%S')
@@ -69,8 +73,9 @@ class BookHotelCustomerSearch(Resource):
                     	op_rateplan rtp ON rtp.idop_rateplan = bhr.idop_rate_plan\
                     WHERE\
                         bh.estado = 1")
-            
-            if iddef_property != "" and idbook_status != "":
+            print(idbook_status)
+            print(iddef_property)
+            if iddef_property != [] and idbook_status != []:
                 if idbook_status == 2 : 
                     book_hotel = db.session.execute((query +" AND CONVERT_TZ(bh.cancelation_date, '+00:00', '-05:00') BETWEEN '{from_date}' and '{to_date}'\
                         AND idbook_status in ({idbook_status}) AND iddef_property in ({iddef_property})").format(from_date= from_date, to_date= to_date, idbook_status = idbook_status, iddef_property = iddef_property)).fetchall()
@@ -84,12 +89,12 @@ class BookHotelCustomerSearch(Resource):
                         AND idbook_status in ({idbook_status}) AND iddef_property in ({iddef_property})").format(from_date= from_date, to_date= to_date, idbook_status = idbook_status, iddef_property = iddef_property)).fetchall()
                     print("1.2")
 
-            if iddef_property != "" and idbook_status == "":
+            if iddef_property != [] and idbook_status == []:
                     book_hotel = db.session.execute((query +" AND CONVERT_TZ(bh.fecha_creacion, '+00:00', '-05:00') BETWEEN '{from_date}' AND '{to_date}'\
                         AND iddef_property in ({iddef_property})").format(from_date= from_date, to_date= to_date, idbook_status = idbook_status, iddef_property = iddef_property)).fetchall()
                     print("2")
 
-            if idbook_status != "" and iddef_property == "":
+            if idbook_status != [] and iddef_property == []:
                 if idbook_status != 2 and  idbook_status != 5:
                     book_hotel = db.session.execute((query +" AND CONVERT_TZ(bh.fecha_creacion, '+00:00', '-05:00') BETWEEN '{from_date}' AND '{to_date}'\
                         AND idbook_status in ({idbook_status})").format(from_date= from_date, to_date= to_date, idbook_status = idbook_status, iddef_property = iddef_property)).fetchall()
@@ -103,7 +108,7 @@ class BookHotelCustomerSearch(Resource):
                         AND idbook_status in ({idbook_status})").format(from_date= from_date, to_date= to_date, idbook_status = idbook_status, iddef_property = iddef_property)).fetchall()
                     print("3.2")
 
-            if idbook_status == "" and iddef_property == "":    
+            if idbook_status == [] and iddef_property == []:    
                     book_hotel = db.session.execute((query +" AND CONVERT_TZ(bh.fecha_creacion, '+00:00', '-05:00') BETWEEN '{from_date}' AND '{to_date}'").format(from_date= from_date, to_date= to_date, idbook_status = idbook_status, iddef_property = iddef_property)).fetchall()
                     print("4")
             # for row in book_hotel:
