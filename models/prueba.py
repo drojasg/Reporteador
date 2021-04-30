@@ -12,6 +12,7 @@ class PruebaBookingSchema(ma.Schema):
     #idbook_hotel = fields.Integer(dump_only = True)
     code_reservation = fields.String(dump_only=True,required = True, validate = validate.Length(max = 60))
     iddef_property = fields.Integer()
+    idbook_status = fields.Integer()
     from_date = fields.DateTime("%Y-%m-%d %H:%M:%S")
     to_date = fields.DateTime("%Y-%m-%d %H:%M:%S")
     nights = fields.Integer()
@@ -61,8 +62,8 @@ class PruebaBookingSchema(ma.Schema):
 
     date_start = fields.DateTime(read_only=True)
     date_end = fields.DateTime(read_only=True)
-    idbook_status = fields.List(fields.Integer())
-    iddef_property = fields.List(fields.Integer())
+    idbookstatus = fields.List(fields.Integer(),read_only=True)
+    propiedades = fields.List(fields.Integer(),read_only=True)
     date_cancelation = fields.DateTime(read_only=True)
 
 #class PruebaBookingSchemaGet(ma.Schema):
