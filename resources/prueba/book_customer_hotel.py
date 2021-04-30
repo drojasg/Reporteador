@@ -79,45 +79,44 @@ class BookHotelCustomerSearch(Resource):
                     WHERE\
                         bh.estado = 1")
 
-            if iddef_property != [] and idbook_status != []:
+            if len(iddef_property) != 0 and len(idbook_status) != 0:
                 if idbook_status == 2 : 
                     book_hotel = db.session.execute((query +" AND CONVERT_TZ(bh.cancelation_date, '+00:00', '-05:00') BETWEEN '{from_date}' and '{to_date}'\
-                        AND bh.idbook_status in ({idbook_status}) AND bh.iddef_property in ({iddef_property})").format(from_date= from_date, to_date= to_date, idbook_status = idbook_status.items(), iddef_property = iddef_property)).fetchall()
+                        AND bh.idbook_status in {idbook_status} AND bh.iddef_property in {iddef_property}").format(from_date= from_date, to_date= to_date, idbook_status = tuple(idbook_status), iddef_property = tuple(iddef_property))).fetchall()
                     print("1")
                 if idbook_status == 5:
                     book_hotel = db.session.execute((query +" AND CONVERT_TZ(bh.modification_date_booking, '+00:00', '-05:00') BETWEEN '{from_date}' and '{to_date}'\
-                        AND bh.idbook_status in ({idbook_status}) AND bh.iddef_property in ({iddef_property})").format(from_date= from_date, to_date= to_date, idbook_status = idbook_status, iddef_property = iddef_property)).fetchall()
+                        AND bh.idbook_status in {idbook_status} AND bh.iddef_property in ({iddef_property}").format(from_date= from_date, to_date= to_date, idbook_status = tuple(idbook_status), iddef_property = tuple(iddef_property))).fetchall()
                     print("1.1")
                 if idbook_status != 2 and idbook_status != 5:
                     book_hotel = db.session.execute((query +" AND CONVERT_TZ(bh.fecha_creacion, '+00:00', '-05:00') BETWEEN '{from_date}' AND '{to_date}'\
                         AND bh.idbook_status in {idbook_status} AND bh.iddef_property in {iddef_property}").format(from_date= from_date, to_date= to_date, idbook_status = tuple(idbook_status), iddef_property = tuple(iddef_property))).fetchall()
                     print("1.2")
 
-            if iddef_property != [] and idbook_status == []:
+            if len(iddef_property) != 0 and len(idbook_status) == 0:
                     book_hotel = db.session.execute((query +" AND CONVERT_TZ(bh.fecha_creacion, '+00:00', '-05:00') BETWEEN '{from_date}' AND '{to_date}'\
-                        AND bh.iddef_property in ({properties})").format(from_date= from_date, to_date= to_date, idbook_status = idbook_status, iddef_property = iddef_property)).fetchall()
+                        AND bh.iddef_property in {iddef_property}").format(from_date= from_date, to_date= to_date, idbook_status = tuple(idbook_status), iddef_property = tuple(iddef_property))).fetchall()
                     print("2")
 
-            if idbook_status != [] and iddef_property == []:
+            if len(idbook_status) != 0 and len(iddef_property) == 0:
                 if idbook_status != 2 and  idbook_status != 5:
                     book_hotel = db.session.execute((query +" AND CONVERT_TZ(bh.fecha_creacion, '+00:00', '-05:00') BETWEEN '{from_date}' AND '{to_date}'\
-                        AND bh.idbook_status in ({idbook_status})").format(from_date= from_date, to_date= to_date, idbook_status = idbook_status, iddef_property = iddef_property)).fetchall()
+                        AND bh.idbook_status in {idbook_status}").format(from_date= from_date, to_date= to_date, idbook_status = tuple(idbook_status), iddef_property = tuple(ddef_property))).fetchall()
                     print("3")
-                if idbook_status == 2:
+                if len(idbook_status) == 2:
                     book_hotel = db.session.execute((query +" AND CONVERT_TZ(bh.cancelation_date, '+00:00', '-05:00') BETWEEN '{from_date}' and '{to_date}'\
-                        AND bh.idbook_status in ({idbook_status})").format(from_date= from_date, to_date= to_date, idbook_status = idbook_status, iddef_property = iddef_property)).fetchall()
+                        AND bh.idbook_status in {idbook_status}").format(from_date= from_date, to_date= to_date, idbook_status = tuple(idbook_status), iddef_property = tuple(iddef_property))).fetchall()
                     print("3.1")
                 if idbook_status == 5:
                     book_hotel = db.session.execute((query +" AND CONVERT_TZ(bh.modification_date_booking, '+00:00', '-05:00') BETWEEN '{from_date}' and '{to_date}'\
-                        AND bh.idbook_status in ({idbook_status})").format(from_date= from_date, to_date= to_date, idbook_status = idbook_status, iddef_property = iddef_property)).fetchall()
+                        AND bh.idbook_status in {idbook_status}").format(from_date= from_date, to_date= to_date, idbook_status = tuple(idbook_status), iddef_property = tuple(iddef_property))).fetchall()
                     print("3.2")
 
-            if len(idbook_status) > 0 and len(iddef_property) >0:
-                    book_hotel = db.session.execute((query +" AND CONVERT_TZ(bh.fecha_creacion, '+00:00', '-05:00') BETWEEN '{from_date}' AND '{to_date}' AND bh.idbook_status in {idbook_status} AND bh.iddef_property in {iddef_property}").format(from_date= from_date, to_date= to_date, idbook_status = tuple(idbook_status), iddef_property = tuple(iddef_property))).fetchall()
+            if len(idbook_status) == 0 and len(iddef_property) == 0:
+                    book_hotel = db.session.execute((query +" AND CONVERT_TZ(bh.fecha_creacion, '+00:00', '-05:00') BETWEEN '{from_date}' AND '{to_date}';")).fetchall()
                     print("4")
-            # for row in book_hotel:
-            #     print(row)
-            schema = bookschema1(many = True)
+            for row in book_hotel:
+                print(row)
             response = {
                 "Code": 200,
                 "Msg": "Success",
